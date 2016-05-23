@@ -2,11 +2,11 @@
 function isArray(arr) {
     if (!Array.isArray) {
         Array.isArray = function(arr) {
-            // 保证跨框架检测array能得到正确的结果
+            // isArray Polyfill
             return Object.prototype.toString.call(arr) === '[object Array]';
         };
     };
-    return Array.isArray;
+    return Array.isArray(arr);
 };
 
 // 判断fn是否为一个函数，返回一个bool值
