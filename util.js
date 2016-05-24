@@ -147,3 +147,8 @@ function each(arr, fn) {
     return arr;
 };
 
+// 获取一个对象里面第一层元素的数量，返回一个整数
+function getObjectLength(obj) {
+    var keys = Object.keys(obj);
+    return keys.length;
+};
