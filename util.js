@@ -80,6 +80,7 @@ function uniqArray(arr) {
         return new Array();     // in case of empty array
     };
 
+    /*
     // sort array
     // number go ahead of string
     function compare(val1, val2) {
@@ -97,18 +98,38 @@ function uniqArray(arr) {
             };
         };
     };
-    arr = arr.sort(compare);
+    arr = arr.sort(compare); */
 
     // delete duplicate elements
-    for (var i = 0; i < len; i++) {
-        for (var j = i + 1; j < len; j++) {
-            if (arr[i] === arr[j]) {
-                arr.splice(j, 1);
-                len--;
+    // simple and dirty way, algorithm complexity O(n^2)
+    function classic(arr) {
+        for (var i = 0; i < len; i++) {
+            for (var j = i + 1; j < len; j++) {
+                if (arr[i] === arr[j]) {
+                    arr.splice(j, 1);
+                    len--;
+                };
             };
         };
+        return arr;
     };
-    return arr;
+
+    // query method, algorithm complexity depend on JavaScript core optimazation, basically O(1)
+    function query(arr) {
+        var head = 0;
+        var tail = arr.length;
+        for (;head >= tail;) {
+            if (arr[head] == arr[tail]) {
+                arr.shift();
+                tail--;
+            } else {
+                arr.push(arr.shift());
+                tail--;
+            };
+        };
+        return arr;
+    };
+    return query(arr);
 };
 
 
