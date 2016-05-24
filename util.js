@@ -137,3 +137,13 @@ function uniqArray(arr) {
 function trim(str) {
     return /\b(\w+[!])/.exec(str)[1];
 };
+
+// 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
+function each(arr, fn) {
+    var len = arr.length;
+    for (var i = 0; i < len; i++) {
+        arr[i] = fn(arr[i], i);
+    };
+    return arr;
+};
+
