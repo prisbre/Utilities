@@ -22,14 +22,16 @@ function cloneObject(src) {
         return src;     // return primitive value
 
     } else if (isArray(src)) {
-        var len = src.length;
+        // clone array
+        var srcLen = src.length;
         var arrClone = new Array();
-        if (!len) {
+        if (!srcLen) {
             return arrClone;
         };
-        for (var i = 0; i < len; i++) {
+
+        for (var i = 0; i < srcLen; i++) {
             if (isArray(src[i])) {
-                arrClone[i] = cloneObject(src[i]);      //deep clone nested array
+                arrClone[i] = cloneObject(src[i]);      // deep clone nested array
             } else {
                 arrClone[i] = src[i];       // copy primitive value
             };
@@ -42,20 +44,38 @@ function cloneObject(src) {
     } else {
         // clone object
         var props = Object.getOwnPropertyNames(src);
+        var propsLen = props.length;
+        if (!propsLen) {
+            return new Object()
+        };
+
+        // deep clone object properties
         var clone = new Object();
-        for (prop in props) {
-            if (typeof(src[prop]) === 'object') {
-                var objClone = cloneObject(src[prop]);      // deep clone nested object
-            };
+        for (var i = 0; i < propsLen; i++) {
+            var prop = props[i];
+            console.log('props prop',props, prop);
 
-            var descriptor = Object.getOwnPropertyDescriptor(src, props[prop]);     // clone descriptor
-            var desClone;
+            // clone descriptor
+            var descriptor = Object.getOwnPropertyDescriptor(src, prop);
+            var desClone = new Object();
+            console.log('descriptor', descriptor);
             for (attr in descriptor) {
-                desClone.attr = descriptor.attr;
-            };
 
-            Object.defineProperties(clone, prop, desClone);
+
+                if (typeof(descriptor[attr]) === 'object') {
+                    // deep clone nested object
+                    desClone[attr] = cloneObject(descriptor[attr]);
+                } else {
+                    // clone descriptor property
+                    desClone[attr] = descriptor[attr];
+                    console.log('desClone.attr', attr, desClone[attr]);
+                };
+            };
+            console.log('desClone',desClone);
+            Object.defineProperty(clone, prop, desClone);
         };
         return clone;
     };
 };
+
+
