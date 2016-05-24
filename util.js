@@ -73,4 +73,42 @@ function cloneObject(src) {
     };
 };
 
+// 对数组进行去重操作，只考虑数组中元素为数字或字符串，返回一个去重后的数组
+function uniqArray(arr) {
+    var len = arr.length;
+    if (!len) {
+        return new Array();     // in case of empty array
+    };
+
+    // sort array
+    // number go ahead of string
+    function compare(val1, val2) {
+        if (typeof(val1) === 'string' && typeof(val2) === 'number') {
+            return 1;
+        } else if (typeof(val2) === 'string' && typeof(val1) === 'number') {
+            return -1;
+        } else {
+            if (val1 > val2) {
+                return 1;
+            } else if (val1 < val2) {
+                return -1;
+            } else {
+                return 0;
+            };
+        };
+    };
+    arr = arr.sort(compare);
+
+    // delete duplicate elements
+    for (var i = 0; i < len; i++) {
+        for (var j = i + 1; j < len; j++) {
+            if (arr[i] === arr[j]) {
+                arr.splice(j, 1);
+                len--;
+            };
+        };
+    };
+    return arr;
+};
+
 
