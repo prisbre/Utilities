@@ -152,3 +152,9 @@ function getObjectLength(obj) {
     var keys = Object.keys(obj);
     return keys.length;
 };
+
+// 判断是否为邮箱地址
+function isEmail(emailStr) {
+    return /^(\w+)[@](\w+\.)+\w+$/i.test(emailStr);
+};
+
