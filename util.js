@@ -53,25 +53,20 @@ function cloneObject(src) {
         var clone = new Object();
         for (var i = 0; i < propsLen; i++) {
             var prop = props[i];
-            console.log('props prop',props, prop);
 
             // clone descriptor
             var descriptor = Object.getOwnPropertyDescriptor(src, prop);
             var desClone = new Object();
-            console.log('descriptor', descriptor);
             for (attr in descriptor) {
-
-
                 if (typeof(descriptor[attr]) === 'object') {
                     // deep clone nested object
                     desClone[attr] = cloneObject(descriptor[attr]);
+
                 } else {
                     // clone descriptor property
                     desClone[attr] = descriptor[attr];
-                    console.log('desClone.attr', attr, desClone[attr]);
                 };
             };
-            console.log('desClone',desClone);
             Object.defineProperty(clone, prop, desClone);
         };
         return clone;
