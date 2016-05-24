@@ -132,4 +132,8 @@ function uniqArray(arr) {
     return query(arr);
 };
 
-
+// 对字符串头尾进行空格字符的去除、包括全角半角空格、Tab等，返回一个字符串
+// 尝试使用一行简洁的正则表达式完成该题目
+function trim(str) {
+    return /\b(\w+[!])/.exec(str)[1];
+};
