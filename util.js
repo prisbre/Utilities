@@ -163,3 +163,32 @@ function isMobilePhone(phone) {
     // in case of China and HK
     return /^((\+)?(86|852))?(\s*-?\s*)?(\d{8}|1\d{10})$/.test(phone);
 };
+
+/*
+ * DOM
+ */
+
+// 为element增加一个样式名为newClassName的新样式
+function addClass(element, newClassName) {
+    element.classList.add(newClassName);
+};
+
+// 移除element中的样式oldClassName
+function removeClass(element, oldClassName) {
+    element.classList.remove(oldClassName);
+};
+
+// 判断siblingNode和element是否为同一个父元素下的同一级的元素，返回bool值
+function isSiblingNode(element, siblingNode) {
+    return element.parentNode.isEqualNode(siblingNode.parentNode);
+};
+
+// 获取element相对于浏览器窗口的位置，返回一个对象{x, y}
+function getPosition(element) {
+    var position = element.getBoundingClientRect();
+    var result = { position.left, position.top};
+    return result;
+};
+
+
+
