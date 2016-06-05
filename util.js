@@ -155,7 +155,7 @@ function getObjectLength(obj) {
 
 // 判断是否为邮箱地址
 function isEmail(emailStr) {
-    return /^(\w+)[@](\w+\.)+\w+$/i.test(emailStr);
+    return /^([a-z0-9]+[-._]?)+@([a-z0-9]+\.){1,3}([a-z]{2,4})$/i.test(emailStr);
 };
 
 // 判断是否为手机号
