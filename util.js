@@ -221,6 +221,9 @@ function $(selector) {
     var sList = selector.replace(/\s+/, ',').split(','),
         elm,
         allTags;
+    if (selector.nodeType) {
+        return selector;
+    };
     sList.forEach(function(e) {
         switch(e[0]) {
             // handle Id
@@ -327,16 +330,12 @@ function addEnterEvent(element, listener) {
 };
 
 // 接下来我们把上面几个函数和$做一下结合，把他们变成$对象的一些方法
-$.on = addEvent;
-$.un = removeEvent;
-$.click = addClickEvent;
 $.enter = addEnterEvent;
-
 
 /*
  * event delegate
  */
-
+// 事件代理
 function delegateEvent(element, tag, eventName, listener) {
     addEvent(element, eventName, function (event) {
         var target = event.target;
@@ -345,7 +344,25 @@ function delegateEvent(element, tag, eventName, listener) {
         };
     });
 };
-$.delegate = delegateEvent;
 
+// 封装事件函数, 把他们变成$对象的一些方法
+$.on = function (selector, event, listener) {
+    addEvent($(selector), event, listener);
+};
 
+$.un = function (selector, event, listener) {
+    removeEvent($(selector), event, listener);
+};
+
+$.click = function (selector, listener) {
+    addClickEvent($(selector), listener);
+};
+
+$.enter = function (selector, listener) {
+    addEnterEvent($(selector), listener);
+};
+
+$.delegate = function (selector, tag, event, listener) {
+    delegateEvent($(selector),tag, event, listener);
+};
 
