@@ -135,7 +135,7 @@ function uniqArray(arr) {
 // 对字符串头尾进行空格字符的去除、包括全角半角空格、Tab等，返回一个字符串
 // 尝试使用一行简洁的正则表达式完成该题目
 function trim(str) {
-    return /\b(\w+[!])/.exec(str)[1];
+    return str.replace(/^\s+|\s+$/g, '');
 };
 
 // 实现一个遍历数组的方法，针对数组中每一个元素执行fn函数，并将数组索引和元素作为参数传递
@@ -276,6 +276,64 @@ function $(selector) {
     });
     return elm;
 };
+
+
+/*
+ * event
+ */
+
+// 给一个element绑定一个针对event事件的响应，响应函数为listener
+// cross browser function, support > IE6
+function addEvent(element, event, listener) {
+    if (element.addEventListener) {
+        element.addEventListener(event, listener, false);
+    } else if (element.attachEvent) {
+        element.attachEvent('on' + event, listener);
+    } else {
+        element['on' + event] = listener;
+    };
+};
+
+// 移除element对象对于event事件发生时执行listener的响应
+// cross browser function, support > IE6
+function removeEvent(element, event, listener) {
+    if (element.removeEventListener) {
+        element.removeEventListener(event, listener, false);
+    } else if (element.detachEvent) {
+        element.detachEvent('on' + event, listener);
+    } else {
+        element['on' + event] = null;
+    };
+};
+
+// 实现对click事件的绑定
+function addClickEvent(element, listener) {
+    addEvent(element, 'click', listener);
+}
+
+// 实现对于按Enter键时的事件绑定
+function addEnterEvent(element, listener) {
+    addEvent(element,
+        'keypress',
+        function (event) {
+            if (event.key) {
+                if (event.key === 'Enter') {
+                    listener.call(element, event);
+                };
+            } else if (event.which === 13) {
+                listener.call(element, event);
+            };
+        });
+};
+
+// 接下来我们把上面几个函数和$做一下结合，把他们变成$对象的一些方法
+
+$.on = addEvent;
+$.un = removeEvent;
+$.click = addClickEvent;
+$.enter = addEnterEvent;
+
+
 
 
 
