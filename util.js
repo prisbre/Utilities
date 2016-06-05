@@ -327,13 +327,25 @@ function addEnterEvent(element, listener) {
 };
 
 // 接下来我们把上面几个函数和$做一下结合，把他们变成$对象的一些方法
-
 $.on = addEvent;
 $.un = removeEvent;
 $.click = addClickEvent;
 $.enter = addEnterEvent;
 
 
+/*
+ * event delegate
+ */
+
+function delegateEvent(element, tag, eventName, listener) {
+    addEvent(element, eventName, function (event) {
+        var target = event.target;
+        if (target.tagName.toLowerCase() === tag.toLowerCase()) {
+            listener.call(target, event);
+        };
+    });
+};
+$.delegate = delegateEvent;
 
 
 
