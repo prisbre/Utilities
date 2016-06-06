@@ -366,3 +366,21 @@ $.delegate = function (selector, tag, event, listener) {
     delegateEvent($(selector),tag, event, listener);
 };
 
+
+/*
+ * BOM
+ */
+
+// 判断是否为IE浏览器，返回-1或者版本号
+// support to IE 11
+function isIE() {
+    var uA = navigator.userAgent.toLowerCase();
+    var pattern = /(?:msie\s|trident.*rv:)([\w.]+)/;
+    if (pattern.test(uA)) {
+        var ver = pattern.exec(uA)[1];
+    } else {
+        ver = -1;
+    };
+    return ver;
+};
+
