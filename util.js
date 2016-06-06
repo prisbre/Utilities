@@ -384,3 +384,29 @@ function isIE() {
     return ver;
 };
 
+// 设置cookie
+function setCookie(cookieName, cookieValue, expiredays) {
+    var cookieText = encodeURIComponent(cookieName) + '='
+        + encodeURIComponent(cookieValue);
+    if (expiredays instanceof Date) {
+        cookieText += '; expires=' + expiredays.toGMTString();
+    };
+    document.cookie = cookieText;
+};
+
+// 获取cookie值
+function getCookie(cookieName) {
+    cookieName = encodeURIComponent(cookieName) + '=';
+    var start = document.cookie.indexOf(cookieName);
+    var cookieValue = null;
+
+    if (start > -1) {
+        var end = document.cookie.indexOf(';', start);
+        if (end == -1) {
+            cookieValue = document.cookie.length;
+        }
+        cookieValue = document.cookie.slice(start + cookieName.length, end);
+    };
+    return cookieValue;
+};
+
