@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test</title>
+    <script type="text/javascript" src="F:\HF\Documents\GitHub\SmallToys\Utilities\util.js"></script>
+    <style type="text/css">
+    .red {
+        color: red;
+    }
+    </style>
+</head>
+<body>
+
+<div class="e1">p</div>
+<div class="e2"><p>fdas</p></div>
+<div data-log="2014">dfsa</div>
+<div data-l>dfsa</div>
+<a href="#">fads</a>
+<div id="fd">fdasf</div>
+<input id='dd' type="text">
+<ul id="list">
+    <li>Simon</li>
+    <li>Kenner</li>
+    <li>Erik</li>
+</ul>
+
+
+<script type="text/javascript">
+
+/*
+var a1 = [{1:2},2];
+var a2 = [1, [2,1]];
+console.log(isArray(a1));
+console.log(isArray(a2));
+
+console.log(cloneObject(a1), 1);
+console.log(cloneObject(a2));
+
+var o1 = {};
+var o2 = {'a':1};
+console.log(cloneObject(o1), 'o1');
+console.log(cloneObject(o2), 'o2');
+
+var o3 = {
+    'c': 2,
+    'nest': {
+        'ab': 1,
+        's': 3
+    },
+    'd': 5
+};
+Object.defineProperty(
+    o3,
+    'c',
+    {
+        enumerable: true,
+        writable: true
+    }
+);
+console.log(cloneObject(o3), 'o3');
+
+
+var srcObj = {
+    a: 1,
+    b: {
+        b1: ["hello", "hi"],
+        b2: "JavaScript"
+    }
+};
+var abObj = srcObj;
+var tarObj = cloneObject(srcObj);
+
+srcObj.a = 2;
+srcObj.b.b1[0] = "Hello";
+
+console.log(abObj.a, 'abObj.a');
+console.log(abObj.b.b1[0], 'abObj.b.b1[0]');
+
+console.log(tarObj.a, 'tarObj.a');      // 1
+console.log(tarObj.b.b1[0], 'tarObj.b.b1[0]');    // "hello"
+
+var a5 = [];
+console.log(uniqArray(a5));
+
+var a4 = [5,1,3,3,6,6,7,7,7];
+console.log(uniqArray(a4));
+var a6 = [15,1,10,5,71,3,3,6,6,7,7,7];
+
+function compare(val1, val2) {
+    if (typeof(val1) === 'string' && typeof(val2) === 'number') {
+        return 1;
+    } else if (typeof(val2) === 'string' && typeof(val1) === 'number') {
+        return -1;
+    } else {
+        if (val1 > val2) {
+            return 1;
+        } else if (val1 < val2) {
+            return -1;
+        } else {
+            return 0;
+        };
+    };
+};
+console.log(a6.sort(compare));
+
+var a7 = [1, '1', 'aree', '11', 's2dz', 1, '3', 'a', '15', 33, 'd', 'da', 'dcc', 'c', 'a', '3ss', 's3', '33', 'a2', '14a', 'sss'];
+uniqArray(a7);
+uniqArray([]);
+
+function aa(arr) {
+    var na = {};
+    for (var i = 0; i < arr.length; i++) {
+        Object.defineProperty(na, arr[i], {});
+        console.log(na);
+    };
+    var nna = Object.keys(na);
+    console.log(nna);
+    return nna;
+};
+
+console.log(aa(a7));
+
+function unqiue(array){
+    var cache=[];
+    var result=[];
+     //将数组元素转为对象的key
+    for(var i=0;i<array.length;i++){
+        cache[array[i]]=i;
+    };
+
+    //存储key(实际的数组元素)
+    for(key in cache){
+        result.push(key);
+    };
+
+    return result;
+}
+
+console.log(unqiue(a7));
+
+function query(arr) {
+    var head = 0;
+    var tail = arr.length;
+    for (;head >= tail;) {
+        if (arr[head] == arr[tail]) {
+            arr.shift();
+            tail--;
+        } else {
+            arr.push(arr.shift());
+            tail--;
+        };
+    };
+    return arr;
+};
+console.log(query(a7));
+
+var str = '   hi!  ';
+str = trim(str);
+console.log(str); // 'hi!'
+
+var arr = ['java', 'c', 'php', 'html'];
+function output(item) {
+    console.log(item)
+}
+each(arr, output);  // java, c, php, html
+
+// 使用示例
+var arr = ['java', 'c', 'php', 'html'];
+function output(item, index) {
+    console.log(index + ': ' + item)
+}
+each(arr, output);  // 0:java, 1:c, 2:php, 3:html
+
+
+var obj = {
+    a: 1,
+    b: 2,
+    c: {
+        c1: 3,
+        c2: 4
+    },
+    d:2
+};
+console.log(getObjectLength(obj)); // 3
+
+var em1 = 'fdasf@fadsf.com'
+console.log(isEmail(em1));
+
+var em2 = '23DsSa@fadKf.co.m'
+console.log(isEmail(em2));
+
+var em3 = 'f./odasf@fa5.dsf.com'
+console.log(isEmail(em3));
+
+var em4 = 'f-odda=sf@fa5.dsdsff.com'
+console.log(isEmail(em4));
+
+var p1 = '+852-43243233'
+console.log(isMobilePhone(p1));
+
+var p2 = '85261347864'
+console.log(isMobilePhone(p2));
+
+var p3 = '86-15396447021'
+console.log(isMobilePhone(p3));
+
+var p4 = '8 6 - 1539 6447021'
+console.log(isMobilePhone(p4));
+
+var p5 = '86 - 1539644702'
+console.log(isMobilePhone(p5));
+
+var p6 = '15396447023'
+console.log(isMobilePhone(p6));
+
+
+
+function jQ() {
+    console.log('success');
+};
+
+var $ = jQ;
+
+$();
+
+console.log(ele);
+console.log(ele.getBoundingClientRect().left);
+var s = getPosition(ele);
+console.log(s);
+
+
+var ele = document.querySelector('div');
+addClass(ele, 'red');
+removeClass(ele, 'red');
+
+var e1 = document.querySelector('.e1');
+var e2 = document.querySelector('.e2');
+console.log(isSiblingNode(e1, e2));
+
+
+console.log($('a'));
+console.log($('div .e2'));
+console.log($('#fd'));
+console.log($('[data-log=2014]'));
+console.log(getPosition(document.getElementById('fd')));
+addEvent(document.getElementById('fd'), 'click', function(e) {alert(typeof e)});
+addEnterEvent(document.getElementById('dd'), function(e) {alert(typeof e)});
+console.log($.on(document.getElementById('fd'), 'click', function(e) {alert(typeof e)}));
+console.log($.enter(document.getElementById('dd'), function(e) {alert(typeof e)}));
+
+console.log($.delegate($('#list'), 'li', 'click', function(e) {alert(typeof e)}));
+$.click("[data-log]", function(e) {alert(typeof e)});
+$.delegate('#list', "li", "click", function(e) {alert(typeof e)});
+
+ajax(
+    '#',
+    {
+        data: {
+            q: 'a'
+        },
+        onsuccess: function (responseText, xhr) {
+            console.log(responseText);
+        },
+        onfail : function () {
+            console.log('fail');
+        }
+    }
+);
+ajax(
+    'http://localhost:8080/server/ajaxtest',
+    {
+        type: 'post',
+        data: {
+            name: 'simon',
+            password: '123456'
+        },
+        onsuccess: function (responseText, xhr) {
+            console.log(responseText);
+        }
+    }
+);
+
+*/
+
+
+
+
+</script>
+</body>
+</html>
