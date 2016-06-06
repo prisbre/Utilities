@@ -220,7 +220,8 @@ function getPosition(element) {
 function $(selector) {
     var sList = selector.replace(/\s+/, ',').split(','),
         elm,
-        allTags;
+        allTags,
+        attr;
     if (selector.nodeType) {
         return selector;
     };
@@ -248,7 +249,7 @@ function $(selector) {
 
                 // attribute with value
                 if (eqIndex !== -1) {
-                    var attr = e.slice(1, eqIndex);
+                    attr = e.slice(1, eqIndex);
                     var val = e.slice(eqIndex + 1, eLen - 1);
                     for(var i = 0; i < tagsLen; i++) {
                         if (allTags[i].hasAttribute(attr)
@@ -261,7 +262,7 @@ function $(selector) {
 
                 // attribute without value
                 } else {
-                    var attr = e.slice(1, eLen - 1);
+                    attr = e.slice(1, eLen - 1);
                     for(var i = 0; i < tagsLen; i++) {
                         if (allTags[i].hasAttribute(attr)) {
                             elm = allTags[i];
@@ -375,9 +376,10 @@ $.delegate = function (selector, tag, event, listener) {
 // support to IE 11
 function isIE() {
     var uA = navigator.userAgent.toLowerCase();
-    var pattern = /(?:msie\s|trident.*rv:)([\w.]+)/;
+    var pattern = /(?:msie\s|trident.*rv:)([\w.]+)/,
+        ver;
     if (pattern.test(uA)) {
-        var ver = pattern.exec(uA)[1];
+        ver = pattern.exec(uA)[1];
     } else {
         ver = -1;
     };
@@ -404,9 +406,89 @@ function getCookie(cookieName) {
         var end = document.cookie.indexOf(';', start);
         if (end == -1) {
             cookieValue = document.cookie.length;
-        }
+        };
         cookieValue = document.cookie.slice(start + cookieName.length, end);
     };
     return cookieValue;
 };
 
+
+// 学习Ajax，并尝试自己封装一个Ajax方法
+function ajax(url, options) {
+
+    // create XMLHttpRequest Object
+    // support to version earlier than IE7
+    function createXHR() {
+        if (typeof XMLHttpRequest != 'undefined') {
+            return new XMLHttpRequest();
+        } else if (typeof ActiveXObject != 'undefined') {
+            if (typeof arguments.callee.activeXString != 'string') {
+                var versions = ['MSXML2.XMLHttp.6.0', 'MSXML2.XMLHttp.3.0', 'MSXML2.XMLHttp'];
+                for (var i=0, len=versions.length; i < len; i++) {
+                    try {
+                        new ActiveXObject(versions[i]);
+                        arguments.callee.activeXString = versions[i];
+                        break;
+                    } catch (ex){
+                        //skip
+                    };
+                };
+            };
+            return new ActiveXObject(arguments.callee.activeXString);
+        } else {
+            throw new Error('No XHR object available.');
+        };
+    };
+    var xhr = createXHR();
+
+    // set default value of request type
+    if (!options.type) {
+        options.type = 'GET';
+    } else {
+        options.type = options.type.toUpperCase();
+    };
+    if (!options.asyc) {
+        options.asyc = true;
+    };
+
+    // set callback function
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 304) {
+                if (options.onsuccess) {
+                    options.onsuccess();
+                };
+            } else {
+                if (options.onfail) {
+                    options.onfail();
+                };
+            };
+        };
+    };
+
+
+    // format valid URL query string
+    if (!options.data) {
+        options.data = '';
+    } else {
+        var encodeQuery = [];
+        for (key in options.data) {
+            if (options.data.hasOwnProperty(key)) {
+                encodeQuery.push(encodeURIComponent(key) + '='
+                    + encodeURIComponent(options.data[key]));
+            };
+        };
+        encodeQuery = encodeQuery.join('&');
+    };
+
+    // send request
+    if (options.type === 'GET') {
+        url += (url.indexOf('?') == -1 ? '?' : '&') + encodeQuery;
+        xhr.open(options.type, url, options.asyc);
+        xhr.send();
+    } else if (options.type === 'POST') {
+        xhr.open(options.type, url, options.asyc);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.send(options.data);
+    };
+};
