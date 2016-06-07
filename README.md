@@ -12,8 +12,9 @@ util.js
 参考：
 * [JavaScript权威指南(第六版)](https://book.douban.com/subject/10549733/)
 * [JavaScript高级程序设计(第三版)](https://book.douban.com/subject/10546125/)
-* [锋利的jQuery](https://book.douban.com/subject/10792216/)
-* [jQuery in Action(2015)](https://book.douban.com/subject/26256670/)
+* [Eloquent JavaScript, Second Edition](https://book.douban.com/subject/25942427/)
 * [DOM Enlightenment](https://book.douban.com/subject/21347611/)
-* [The Art of Software Testing, Third Edition](https://book.douban.com/subject/10076924/)
+* [JavaScript DOM编程艺术(第2版)](https://book.douban.com/subject/6038371/)
+* [jQuery in Action(2015)](https://book.douban.com/subject/26256670/)
+* [锋利的jQuery](https://book.douban.com/subject/10792216/)
 * [Mozilla Developer Network](https://developer.mozilla.org/en-US/)

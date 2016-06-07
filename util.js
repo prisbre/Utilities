@@ -160,7 +160,7 @@ function isEmail(emailStr) {
 
 // 判断是否为手机号
 function isMobilePhone(phone) {
-    // in case of China and HK
+    // in case of Mainland China and HK
     return /^((\+)?(86|852))?(\s*-?\s*)?(\d{8}|1\d{10})$/.test(phone);
 };
 
