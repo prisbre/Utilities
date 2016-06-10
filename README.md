@@ -1,7 +1,12 @@
 util.js
 ==
+
 一个小型JavaScript库文件，参考的是[百度前端技术学院](https://github.com/baidu-ife/ife)的学习任务。
 任务书点击[这里](https://github.com/baidu-ife/ife/tree/master/2015_spring/task/task0002)
+
+
+练习：
+倒计时功能:  task0002_2
 
 
 总结:
