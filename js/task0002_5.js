@@ -1,5 +1,5 @@
 (function () {
-
+    // extend util.js
     $.getEvent = function (event) {
         return event ? event : window.event;
     };
@@ -7,6 +7,7 @@
         return event.target || event.srcElement;
     };
 
+    // draggable element behavior & transfer data
     function dgStart(event) {
         event = $.getEvent(event);
         target = $.getTarget(event);
@@ -17,7 +18,7 @@
     };
     delegateEvent($('#main'), 'li', 'dragstart', dgStart);
 
-
+    // drag over behavior
     function dgOver(event) {
         event = $.getEvent(event);
         event.preventDefault();
@@ -25,6 +26,7 @@
     };
     delegateEvent($('#main'), 'ul', 'dragover', dgOver);
 
+    // drop spot behavior
     function dropHandler(event) {
         event = $.getEvent(event);
         target = $.getTarget(event);
@@ -38,4 +40,6 @@
 
 
 }) ();
+
+
 
