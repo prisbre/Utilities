@@ -405,7 +405,7 @@ function getCookie(cookieName) {
     if (start > -1) {
         var end = document.cookie.indexOf(';', start);
         if (end == -1) {
-            cookieValue = document.cookie.length;
+            end = document.cookie.length;
         };
         cookieValue = document.cookie.slice(start + cookieName.length, end);
     };
