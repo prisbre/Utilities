@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 <head>
     <meta charset="utf-8">
     <title>轮播图组件</title>
@@ -79,6 +79,7 @@
     </style>
 </head>
 <body>
+    <!-- Carousel -->
     <article>
         <ul id="container">
             <li class="image"><img src="img/4.jpg" alt="4"></li>
@@ -99,6 +100,26 @@
             <a href="javascript:;" class="arrow" id="next">&gt;</a>
         </div>
     </article>
+    <br>
+
+    <!-- Carousel Setting -->
+    <form id="setting">
+        <h4>在此处设置轮播图</h4><br>
+        <lable for="direction">方向</lable>
+        <select name="setting-direction" id="direction">
+            <option value="true">正向</option>
+            <option value="false">反向</option>
+        </select>
+
+        <lable for="loop">循环</lable>
+        <select name="setting-loop" id="loop">
+            <option value="true">是</option>
+            <option value="false">否</option>
+        </select>
+        <lable for="interval">间隔</lable>
+        <input type="text" id="interval">
+    </form>
+
     <script type="text/javascript" src="util.js"></script>
     <script type="text/javascript" src="js/task0002_3.js"></script>
 </body>
