@@ -48,10 +48,33 @@
             border: 2px solid #999999;
             cursor: pointer;
         }
-        #on {
+        .btn #on {
             background-color: #ff9900;
         }
-
+        #arrow-container {
+            position: absolute;
+            display: none;
+            list-style: none;
+            justify-content: space-between;
+            width: 100%;
+            bottom: 180px;
+            z-index: 3;
+        }
+        article:hover #arrow-container{
+            display: flex;
+        }
+        .arrow {
+            font-size: 40px;
+            font-weight: bold;
+            width: 40px;
+            text-align: center;
+            cursor: pointer;
+            background-color: rgba(0,0,0,0.3);
+            color: #ffffff;
+        }
+        .arrow:hover {
+            background-color: rgba(0,0,0,0.7);
+        }
 
     </style>
 </head>
@@ -71,10 +94,10 @@
             <li class="btn" id="3"></li>
             <li class="btn" id="4"></li>
         </ul>
-        <ul id="arrow-container">
-            <li class="arrow"><</li>
-            <li class="arrow">></li>
-        </ul>
+        <div id="arrow-container">
+            <a href="javascript:;" class="arrow" id="prev">&lt;</a>
+            <a href="javascript:;" class="arrow" id="next">&gt;</a>
+        </div>
     </article>
     <script type="text/javascript" src="util.js"></script>
     <script type="text/javascript" src="js/task0002_3.js"></script>
