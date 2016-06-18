@@ -1,4 +1,4 @@
-window.onload = function () {
+(function () {
     // extend util.js
     $.getEvent = function (event) {
         return event ? event : window.event;
@@ -12,18 +12,28 @@ window.onload = function () {
         event = $.getEvent(event);
         target = $.getTarget(event);
 
-        function slide(direction, loop, interval) {};
+        function slide(imgWidth, num, direction, loop, interval) {};
 
         // arrow click animation
-        var id = target.getAttribute('id');
-        var container = $('#container');
-        var leftVal = parseInt(window.getComputedStyle(container).left);
-        if (id == 'prev' ) {
-            leftVal += 600 + 'px';
+        var imgWidth = 600,
+            num = 4,
+            id = target.getAttribute('id'),
+            container = $('#container'),
+            leftVal = parseInt(window.getComputedStyle(container).left);
+        if (id == 'prev') {
+            if (leftVal > -imgWidth) {
+                leftVal = -imgWidth * num;
+            };
+            leftVal += imgWidth;
         } else if (id == 'next') {
-            leftVal -= 600 + 'px';
-        }
-        container.style.setProperty('left', leftVal);
+            if (leftVal < -imgWidth * num) {
+                leftVal = -imgWidth;
+            };
+            leftVal -= imgWidth;
+        };
+        container.style.setProperty('left', leftVal + 'px');
     };
+
+
     delegateEvent($('article'), 'a', 'click', animate);
-};
+}) ();
