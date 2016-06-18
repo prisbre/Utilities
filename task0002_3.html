@@ -17,12 +17,13 @@
             height: 400px;
             border: 1px solid grey;
             position: relative;
+            overflow: hidden;
         }
         #container {
             position: absolute;
-            width: 600px;
+            left: -600px;
+            width: 3600px;
             height: 400px;
-            overflow: hidden;
             display: flex;
             padding: 0;
             z-index: 1;
@@ -89,16 +90,17 @@
             <li class="image"><img src="img/4.jpg" alt="4"></li>
             <li class="image"><img src="img/1.jpg" alt="1"></li>
         </ul>
+        <div id="arrow-container">
+            <a href="javascript:;" class="arrow" id="prev">&lt;</a>
+            <a href="javascript:;" class="arrow" id="next">&gt;</a>
+        </div>
         <ul id="btn-container">
             <li class="btn" id="1"></li>
             <li class="btn" id="2"></li>
             <li class="btn" id="3"></li>
             <li class="btn" id="4"></li>
         </ul>
-        <div id="arrow-container">
-            <a href="javascript:;" class="arrow" id="prev">&lt;</a>
-            <a href="javascript:;" class="arrow" id="next">&gt;</a>
-        </div>
+
     </article>
     <br>
 
