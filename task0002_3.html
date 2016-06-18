@@ -49,7 +49,7 @@
             border: 2px solid #999999;
             cursor: pointer;
         }
-        .btn .on {
+        #on {
             background-color: #ff9900;
         }
         #arrow-container {
@@ -95,10 +95,10 @@
             <a href="javascript:;" class="arrow" id="next">&gt;</a>
         </div>
         <ul id="btn-container">
-            <li class="btn" id="1"></li>
-            <li class="btn" id="2"></li>
-            <li class="btn" id="3"></li>
-            <li class="btn" id="4"></li>
+            <li class="btn" data-index="1" id="on"></li>
+            <li class="btn" data-index="2"></li>
+            <li class="btn" data-index="3"></li>
+            <li class="btn" data-index="4"></li>
         </ul>
     </article>
     <br>
@@ -119,6 +119,7 @@
         </select>
         <lable for="interval">间隔</lable>
         <input type="text" id="interval">
+        <button id="confirm">确认</button>
     </form>
 
     <script type="text/javascript" src="util.js"></script>
