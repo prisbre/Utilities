@@ -13,46 +13,69 @@
         target = $.getTarget(event);
         var imgWidth = 600,
             num = 4,
-            id = target.getAttribute('id'),
             container = $('#container'),
+            id = target.getAttribute('id'),
             leftVal = parseInt(window.getComputedStyle(container).left);    // control slide position
-            index = 0;    // mark button index
+            index = Math.abs(parseInt(leftVal / imgWidth));    // control button active style
 
         function slide(imgWidth, num, direction, loop, interval) {};
 
         // arrow click animation
-        function arrowClick(id) {
+        function arrowClick(target, id) {
+            // circulate
             if (id == 'prev') {
-                if (leftVal > -imgWidth) {
-                    leftVal = -imgWidth * num;
+                if (leftVal >= -imgWidth) {
+                    leftVal = -imgWidth * (num + 1);
+                    index = 5;
                 };
                 leftVal += imgWidth;
+                index--;
             } else if (id == 'next') {
-                if (leftVal < -imgWidth * num) {
-                    leftVal = -imgWidth;
+                if (leftVal <= -imgWidth * num) {
+                    leftVal = 0;
+                    index = 0;
                 };
                 leftVal -= imgWidth;
+                index ++;
             };
-            container.style.setProperty('left', leftVal + 'px');
+
+            // change button style
+            return activeDot(index);
         };
 
-
-        if (target.tagName.toLowerCase() == 'a') {
-            arrowClick(id);
+        // dot toggle
+        function activeDot(index) {
+            var activeElement = $('#on');
+            if (activeElement) {
+                $('#on').removeAttribute('id');
+            };
+            console.log(index, document.getElementsByClassName('btn'));
+            document.getElementsByClassName('btn')[index - 1].setAttribute('id', 'on');
         };
 
         // button click animation
-        function buttonClick(event) {
-            index
-        }
+        function buttonClick(target) {
+            // switch image
+            index = parseInt(target.dataset.index);
+            if (leftVal != -imgWidth * (index)) {
+                leftVal = -imgWidth * (index);
+            };
 
+            // toggle button style
+            activeDot(index);
+        };
 
+        if (target.tagName.toLowerCase() == 'a') {
+            arrowClick(target, id);
+        };
+        if (target.className == 'btn') {
+            buttonClick(target);
+        };
+        container.style.setProperty('left', leftVal + 'px');
 
-
-    }
-
-
+    };
 
 
     delegateEvent($('article'), 'a', 'click', animate);
+    delegateEvent($('article'), 'li', 'click', animate);
 }) ();
