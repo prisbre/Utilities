@@ -1,4 +1,4 @@
-(function () {
+(function carousel() {
     // extend util.js
     $.getEvent = function (event) {
         return event ? event : window.event;
@@ -17,8 +17,6 @@
             id = target.getAttribute('id'),
             leftVal = parseInt(window.getComputedStyle(container).left);    // control slide position
             index = Math.abs(parseInt(leftVal / imgWidth));    // control button active style
-
-        function slide(imgWidth, num, direction, loop, interval) {};
 
         // arrow click animation
         function arrowClick(target, id) {
@@ -43,7 +41,7 @@
             return activeDot(index);
         };
 
-        // dot toggle
+        // button style: dot toggle
         function activeDot(index) {
             var activeElement = $('#on');
             if (activeElement) {
@@ -71,11 +69,38 @@
         if (target.className == 'btn') {
             buttonClick(target);
         };
+
         container.style.setProperty('left', leftVal + 'px');
+    };
+
+    // autoplay animation
+    function slide(imgWidth, num, direction, loop, interval) {
+    };
+
+    // carousel setting value
+    function controlInfo(event) {
+        event = $.getEvent(event);
+        target = $.getTarget(event);
+        var direction = $('form').direction.value,
+            loop =  $('form').loop.value,
+            interval = $('input').value;
+
+        return slide(imgWidth, num, direction, loop, interval);
 
     };
+/*
+    // slide setting
+    //,
+
+
+
 
 
     delegateEvent($('article'), 'a', 'click', animate);
     delegateEvent($('article'), 'li', 'click', animate);
+    delegateEvent($('form'), 'span', 'click', controlInfo);
 }) ();
+
+
+
+// carousel.timer = setTimeout(interval)
