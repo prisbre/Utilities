@@ -7,25 +7,22 @@
         return event.target || event.srcElement;
     };
 
-
-
     // get left value of current picture
     function getLeft(){
-        var container = $('#container'),
-        leftNow = parseInt(window.getComputedStyle(container).left);
+        var matrix = window.getComputedStyle($('#container')).getPropertyValue('transform'),
+            data = /\((.+)\)/.exec(matrix)[0],
+            leftNow = parseInt(data.split(',')[4]);
+        console.log('gl', leftNow);
         return leftNow;
     };
 
-
     // slide to target picture
-    function slide(leftVal, imgWidth, num) {
-        console.log(leftVal);
+    function slide(leftVal) {
+        $('#container').style.setProperty('transform', 'translate(' + leftVal + 'px, 0px)');
+        return;
+    };
 
-        // slide transition
-        container.style.setProperty('transition-duration', '0.3s');
-        container.style.setProperty('transform', 'translate(' + leftVal + 'px' + ', 0px)');
-/*
-        // circulate
+/*        // circulate
         var circulate = true;
         if (circulate) {
             if (leftVal > -imgWidth) {
@@ -38,8 +35,7 @@
             // container.style.setProperty('left', leftVal + 'px');
         };*/
 
-        return;
-    };
+
 
     // button style: active dot toggle
     function activeDot(index) {
@@ -49,24 +45,63 @@
         };
         // console.log(index, document.getElementsByClassName('btn'));
         document.getElementsByClassName('btn')[index - 1].setAttribute('id', 'on');
+        return;
     };
 
     // button click animation
     function buttonClick(target, imgWidth, num) {
         // switch image
-        var leftVal = getLeft();
-        index = parseInt(target.dataset.index);
-        if (leftVal != -imgWidth * (index)) {
-            leftVal = -imgWidth * (index);
-        };
-        console.log(index)
-        slide(leftVal, imgWidth, num);
+        var leftVal = getLeft(),
+            index = parseInt(target.dataset.index);
+        if (leftVal != -imgWidth * index) {
+            leftVal = -imgWidth * index;
+        } else {
+            return;
+        }
+        console.log('bc', leftVal, index)
+        slide(leftVal);
 
         // toggle button style
-        activeDot(index);
+        return activeDot(index);
+    };
+
+    // arrow click animation
+    function arrowClick(target, imgWidth, num) {
+        // circulate
+        var id = target.getAttribute('id'),
+            leftVal = getLeft(),
+            index = Math.abs(parseInt(leftVal / imgWidth));
+        console.log('s', index, leftVal)
+        switch (id) {
+            case 'prev':
+                if (leftVal = 0) {
+                    leftVal = -imgWidth * num;
+                    index = 4;
+                };
+                leftVal += imgWidth;
+                index--;
+                break;
+            case 'next':
+                if (leftVal = -imgWidth * (num + 1)) {
+                    leftVal = -imgWidth * 1;
+                    index = 1;
+                };
+                leftVal -= imgWidth;
+                index ++;
+                break;
+        };
+        console.log('s', index, leftVal);
+        slide(leftVal);
+
+        // change button style
+        return activeDot(index);
     };
 
 
+
+
+
+    // handle button click
     delegateEvent(
         $('article'),
         'li',
@@ -76,12 +111,21 @@
                 target = $.getTarget(event),
                 imgWidth = 600,
                 num = 4;
-
             return buttonClick(target, imgWidth, num);
-
         });
 
-
+    // handle arrow click
+    delegateEvent(
+        $('article'),
+        'a',
+        'click',
+        function (event) {
+            var event = $.getEvent(event),
+                target = $.getTarget(event),
+                imgWidth = 600,
+                num = 4;
+            return arrowClick(target, imgWidth, num);
+        });
 
     //delegateEvent($('article'), 'a', 'click', animate);
     // delegateEvent($('article'), 'li', 'click', animate);
@@ -136,27 +180,6 @@
             return activeDot(index);
         };
 
-        // button style: dot toggle
-        function activeDot(index) {
-            var activeElement = $('#on');
-            if (activeElement) {
-                $('#on').removeAttribute('id');
-            };
-            console.log(index, document.getElementsByClassName('btn'));
-            document.getElementsByClassName('btn')[index - 1].setAttribute('id', 'on');
-        };
-
-        // button click animation
-        function buttonClick(target) {
-            // switch image
-            index = parseInt(target.dataset.index);
-            if (leftVal != -imgWidth * (index)) {
-                leftVal = -imgWidth * (index);
-            };
-
-            // toggle button style
-            activeDot(index);
-        };
 
         if (target.tagName.toLowerCase() == 'a') {
             arrowClick(target, id);
