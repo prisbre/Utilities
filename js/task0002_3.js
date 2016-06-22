@@ -7,7 +7,7 @@
         return event.target || event.srcElement;
     };
 
-    // get left value of current picture
+    // get position value of current picture
     function getLeft(){
         var matrix = window.getComputedStyle($('#container')).getPropertyValue('transform'),
             data = /\((.+)\)/.exec(matrix)[0],
@@ -17,25 +17,14 @@
     };
 
     // slide to target picture
-    function slide(leftVal) {
-        $('#container').style.setProperty('transform', 'translate(' + leftVal + 'px, 0px)');
+    function slide(left, duration) {
+        var container = $('#container');
+        if (duration) {
+            container.style.setProperty('transition-duration', duration);
+        };
+        container.style.setProperty('transform', 'translate(' + left + 'px, 0px)');
         return;
     };
-
-/*        // circulate
-        var circulate = true;
-        if (circulate) {
-            if (leftVal > -imgWidth) {
-                leftVal = -imgWidth * (num - 1);
-            };
-            if (leftVal < -imgWidth * (num + 1)) {
-                leftVal = 0;
-            };
-            container.style.setProperty('transform', 'translate(' + leftVal + 'px' + ', 0px)');
-            // container.style.setProperty('left', leftVal + 'px');
-        };*/
-
-
 
     // button style: active dot toggle
     function activeDot(index) {
@@ -51,15 +40,15 @@
     // button click animation
     function buttonClick(target, imgWidth, num) {
         // switch image
-        var leftVal = getLeft(),
+        var left = getLeft(),
             index = parseInt(target.dataset.index);
-        if (leftVal != -imgWidth * index) {
-            leftVal = -imgWidth * index;
+        if (left != -imgWidth * index) {
+            left = -imgWidth * index;
         } else {
             return;
         }
-        console.log('bc', leftVal, index)
-        slide(leftVal);
+        console.log('bc', left, index)
+        slide(left);
 
         // toggle button style
         return activeDot(index);
@@ -69,32 +58,53 @@
     function arrowClick(target, imgWidth, num) {
         // circulate
         var id = target.getAttribute('id'),
-            leftVal = getLeft(),
-            index = Math.abs(parseInt(leftVal / imgWidth));
-        console.log('s', index, leftVal)
+            left = getLeft(),
+            index = Math.abs(parseInt(left / imgWidth)),
+            compare = index;
+
+        // boundry condition
+        console.log('s', index, left)
+
         switch (id) {
             case 'prev':
-                if (leftVal = 0) {
-                    leftVal = -imgWidth * num;
-                    index = 4;
-                };
-                leftVal += imgWidth;
+                left += imgWidth;
                 index--;
-                break;
-            case 'next':
-                if (leftVal = -imgWidth * (num + 1)) {
-                    leftVal = -imgWidth * 1;
-                    index = 1;
+                if (left > 0) {
+                    left = -imgWidth * num;
+                    slide(left, '0s');
+                    left = -imgWidth * (num - 1);
+                    index = num - 1;
+
+                    // bug? without this carousel won't circulate correctly
+                    console.log(window.getComputedStyle($('#container')).getPropertyValue('transform'));
                 };
-                leftVal -= imgWidth;
+                console.log('t',index);
+                break;
+
+            case 'next':
+                left -= imgWidth;
                 index ++;
+                if (left < -imgWidth * (num + 1)) {
+                    left = -imgWidth;
+                    slide(left, '0s');
+                    left = -imgWidth * 2;
+                    index = 2;
+
+                    console.log(window.getComputedStyle($('#container')).getPropertyValue('transform'));
+                };
                 break;
         };
-        console.log('s', index, leftVal);
-        slide(leftVal);
+        console.log('s', index, left);
 
+        if (index >= 5) {
+            index = 1;
+        } else if (index <= 0) {
+            index = 4;
+        };
         // change button style
-        return activeDot(index);
+        activeDot(index);
+
+        return slide(left, '0.3s');
     };
 
 
@@ -154,28 +164,28 @@
             num = 4,
             container = $('#container'),
             id = target.getAttribute('id'),
-            leftVal = parseInt(window.getComputedStyle(container).left);    // control slide position
-            index = Math.abs(parseInt(leftVal / imgWidth));    // control button active style
+            left = parseInt(window.getComputedStyle(container).left);    // control slide position
+            index = Math.abs(parseInt(left / imgWidth));    // control button active style
 
         // arrow click animation
         function arrowClick(target, id) {
             // circulate
             if (id == 'prev') {
-                if (leftVal >= -imgWidth) {
-                    leftVal = -imgWidth * (num + 1);
+                if (left >= -imgWidth) {
+                    left = -imgWidth * (num + 1);
                     index = 5;
                 };
-                leftVal += imgWidth;
+                left += imgWidth;
                 index--;
             } else if (id == 'next') {
-                if (leftVal <= -imgWidth * num) {
-                    leftVal = 0;
+                if (left <= -imgWidth * num) {
+                    left = 0;
                     index = 0;
                 };
-                leftVal -= imgWidth;
+                left -= imgWidth;
                 index ++;
             };
-            slide(leftVal);
+            slide(left);
             // change button style
             return activeDot(index);
         };
@@ -188,13 +198,13 @@
             buttonClick(target);
         };
 
-        // container.style.setProperty('left', leftVal + 'px');
-        slide(leftVal, direction, loop, duration);
+        // container.style.setProperty('left', left + 'px');
+        slide(left, direction, loop, duration);
     };
 
 
     carousel.timer = setTimeout(function refer() {
-        slide(leftVal, direction, loop, duration).call(controlInfo);
+        slide(left, direction, loop, duration).call(controlInfo);
         carousel.timer = setTimeout(refer, duration);
     }, duration);
 
@@ -212,7 +222,7 @@
             clearTimeout(controlInfo.timer);
         };
         controlInfo.timer = setTimeout(function refer() {
-            slide(leftVal, direction, loop, duration).call(controlInfo);
+            slide(left, direction, loop, duration).call(controlInfo);
             controlInfo.timer = setTimeout(refer, interval);
         }, interval);
 
