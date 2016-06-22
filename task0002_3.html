@@ -21,7 +21,7 @@
         }
         #container {
             position: absolute;
-            left: -600px;
+            left: 0px;
             width: 3600px;
             height: 400px;
             display: flex;
@@ -76,6 +76,12 @@
         .arrow:hover {
             background-color: rgba(0,0,0,0.7);
         }
+        #confirm {
+            padding: 2px;
+            background-color: rgba(0,0,0,0.4);
+            border: 1px solid black;
+            cursor: pointer;
+        };
 
     </style>
 </head>
@@ -107,19 +113,19 @@
     <form id="setting">
         <h4>在此处设置轮播图</h4><br>
         <lable for="direction">方向</lable>
-        <select name="setting-direction" id="direction">
+        <select name="direction" id="direction">
             <option value="true">正向</option>
             <option value="false">反向</option>
         </select>
 
         <lable for="loop">循环</lable>
-        <select name="setting-loop" id="loop">
+        <select name="loop" id="loop">
             <option value="true">是</option>
             <option value="false">否</option>
         </select>
         <lable for="interval">间隔</lable>
         <input type="text" id="interval">
-        <button id="confirm">确认</button>
+        <span id="confirm">确认</span>
     </form>
 
     <script type="text/javascript" src="util.js"></script>
