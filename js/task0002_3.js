@@ -46,7 +46,7 @@
         } else {
             return;
         };
-        slide(left);
+        slide(left, '0.5s');
 
         // toggle button style
         return activeDot(index);
@@ -97,7 +97,7 @@
         };
         activeDot(index);
 
-        return slide(left, '1s');
+        return slide(left, '0.5s');
     };
 
     // carousel autoplay
@@ -171,13 +171,11 @@
                 direction = target.getAttribute('id'),
                 loop =  $('form').loop.value,
                 left = getLeft();
-                console.log('hi',loop, left);
 
             // not loop: when reach boundry, jump out
             if (loop == 'notLoop') {
                 if ((left >= -600 && direction == 'prev') || (left <= -2400 && direction == 'next'))
                 {
-                    console.log('hi there');
                     return;
                 };
             };
@@ -187,8 +185,7 @@
 
     // handle setting
     delegateEvent($('form'), 'span', 'click', settingHandler);
-
-    return autoplay('prev', 'isLoop', 3000);
+    return autoplay('next', 'isLoop', 3000);
 }) ();
 
 
