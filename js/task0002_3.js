@@ -13,11 +13,10 @@
                 .getPropertyValue('transform'),
             data = /\((.+)\)/.exec(matrix)[0],
             leftNow = parseInt(data.split(',')[4]);
-        //console.log('gl', leftNow);
         return leftNow;
     };
 
-    // slide to target picture
+    // basic slide action
     function slide(left, duration) {
         var container = $('#container');
         if (duration) {
@@ -27,13 +26,12 @@
         return;
     };
 
-    // button style: active dot toggle
+    // active button style: dot toggle
     function activeDot(index) {
         var activeElement = $('#on');
         if (activeElement) {
             $('#on').removeAttribute('id');
         };
-        // console.log(index, document.getElementsByClassName('btn'));
         document.getElementsByClassName('btn')[index - 1].setAttribute('id', 'on');
         return;
     };
@@ -47,8 +45,7 @@
             left = -imgWidth * index;
         } else {
             return;
-        }
-        //console.log('bc', left, index)
+        };
         slide(left);
 
         // toggle button style
@@ -56,17 +53,12 @@
     };
 
     // arrow click animation
-    function arrowClick(target, imgWidth, num) {
-        // circulate
-        var id = target.getAttribute('id'),
-            left = getLeft(),
+    function arrowClick(direction, imgWidth, num) {
+        var left = getLeft(),
             index = Math.abs(parseInt(left / imgWidth));
 
-        console.log(id);
-
         // boundry condition
-        //console.log('s', index, left)
-        switch (id) {
+        switch (direction) {
             case 'prev':
                 left += imgWidth;
                 index--;
@@ -76,11 +68,10 @@
                     left = -imgWidth * (num - 1);
                     index = num - 1;
 
-                    // bug? without this carousel won't circulate correctly
+                    // bug? without this line, carousel won't display loop correctly
                     console.log(window.getComputedStyle($('#container'))
                         .getPropertyValue('transform'));
                 };
-                //console.log('t',index);
                 break;
 
             case 'next':
@@ -97,7 +88,6 @@
                 };
                 break;
         };
-        //console.log('s', index, left);
 
         // fix index beyond boundry
         if (index >= 5) {
@@ -105,29 +95,35 @@
         } else if (index <= 0) {
             index = 4;
         };
-
         activeDot(index);
-        return slide(left, '0.3s');
+
+        return slide(left, '1s');
     };
 
     // carousel autoplay
     function autoplay(direction, loop, interval) {
         autoplay.timer = setTimeout(function delay() {
             var imgWidth = 600,
-                num = 4;
-            console.log('autoplay.timer', direction, autoplay.timer);
+                num = 4,
+                left = getLeft();
+
+            // not loop: when reach boundry, clear timer and jump out
+            if (loop == 'notLoop') {
+                if ((left >= -600 && direction == 'prev') || (left <= -2400 && direction == 'next'))
+                {
+                    clearTimeout(autoplay.timer);
+                    return;
+                };
+            };
 
             switch (direction) {
                 case 'next':
-                    arrowClick($('#next'), imgWidth, num);
-                    console.log('#next', arrowClick);
+                    arrowClick('next', imgWidth, num);
                     break;
                 case 'prev':
-                    arrowClick($('#prev'), imgWidth, num);
-                    console.log('#prev',arrowClick);
+                    arrowClick('prev', imgWidth, num);
                     break;
             };
-
 
             autoplay.timer = setTimeout(delay, interval);
         }, interval);
@@ -145,7 +141,6 @@
         // set timer & autoplay
         if (autoplay.timer) {
             clearTimeout(autoplay.timer);
-            console.log('h', autoplay.timer, typeof direction, loop, interval)
         };
         return autoplay(direction, loop, interval);
     };
@@ -172,14 +167,28 @@
             var event = $.getEvent(event),
                 target = $.getTarget(event),
                 imgWidth = 600,
-                num = 4;
-            return arrowClick(target, imgWidth, num);
+                num = 4,
+                direction = target.getAttribute('id'),
+                loop =  $('form').loop.value,
+                left = getLeft();
+                console.log('hi',loop, left);
+
+            // not loop: when reach boundry, jump out
+            if (loop == 'notLoop') {
+                if ((left >= -600 && direction == 'prev') || (left <= -2400 && direction == 'next'))
+                {
+                    console.log('hi there');
+                    return;
+                };
+            };
+
+            return arrowClick(direction, imgWidth, num);
     });
 
     // handle setting
     delegateEvent($('form'), 'span', 'click', settingHandler);
 
-    return autoplay('prev', true, 2000);
+    return autoplay('prev', 'isLoop', 3000);
 }) ();
 
 
