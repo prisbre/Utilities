@@ -9,7 +9,7 @@ util.js：微型JavaScript库文件，参考的是[百度前端技术学院](htt
     [[Demo]](http://htmlpreview.github.io/?https://github.com/prisbre/Utilities/blob/master/task0002_2.html)
 * 界面拖拽功能：  [[Code]](https://github.com/prisbre/Utilities/blob/master/js/task0002_5.js)
     [[Demo]](http://htmlpreview.github.io/?https://github.com/prisbre/Utilities/blob/master/task0002_5.html)
-* 轮播图组件：    [[Code]](https://github.com/prisbre/Utilities/blob/master/task0002_3.html)
+* 轮播图组件：    [[Code]](https://github.com/prisbre/Utilities/blob/master/js/task0002_3.js)
     [[Demo]](http://htmlpreview.github.io/?https://github.com/prisbre/Utilities/blob/master/task0002_3.html)
 
 ### 总结:
