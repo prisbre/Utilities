@@ -11,8 +11,23 @@
         }
         body {
             padding: 20px;
+            display: flex;
         }
-        article {
+        h1 {
+            font-size: 24px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        #display {
+            margin: 10px;
+            width: 650px;
+        }
+        #specification {
+            margin: 50px;
+            width: auto;
+        }
+        #carousel {
             width: 600px;
             height: 400px;
             border: 1px solid grey;
@@ -88,47 +103,67 @@
     </style>
 </head>
 <body>
-    <!-- Carousel -->
-    <article>
-        <ul id="container">
-            <li class="image"><img src="img/4.jpg" alt="4"></li>
-            <li class="image"><img src="img/1.jpg" alt="1"></li>
-            <li class="image"><img src="img/2.jpg" alt="2"></li>
-            <li class="image"><img src="img/3.jpg" alt="3"></li>
-            <li class="image"><img src="img/4.jpg" alt="4"></li>
-            <li class="image"><img src="img/1.jpg" alt="1"></li>
-        </ul>
-        <div id="arrow-container">
-            <a href="javascript:;" class="arrow" id="prev">&lt;</a>
-            <a href="javascript:;" class="arrow" id="next">&gt;</a>
-        </div>
-        <ul id="btn-container">
-            <li class="btn" data-index="1" id="on"></li>
-            <li class="btn" data-index="2"></li>
-            <li class="btn" data-index="3"></li>
-            <li class="btn" data-index="4"></li>
-        </ul>
+    <article id="display">
+        <!-- Carousel -->
+        <article id="carousel">
+            <ul id="container">
+                <li class="image"><img src="img/4.jpg" alt="4"></li>
+                <li class="image"><img src="img/1.jpg" alt="1"></li>
+                <li class="image"><img src="img/2.jpg" alt="2"></li>
+                <li class="image"><img src="img/3.jpg" alt="3"></li>
+                <li class="image"><img src="img/4.jpg" alt="4"></li>
+                <li class="image"><img src="img/1.jpg" alt="1"></li>
+            </ul>
+            <div id="arrow-container">
+                <a href="javascript:;" class="arrow" id="prev">&lt;</a>
+                <a href="javascript:;" class="arrow" id="next">&gt;</a>
+            </div>
+            <ul id="btn-container">
+                <li class="btn" data-index="1" id="on"></li>
+                <li class="btn" data-index="2"></li>
+                <li class="btn" data-index="3"></li>
+                <li class="btn" data-index="4"></li>
+            </ul>
+        </article>
+        <br>
+
+        <!-- Carousel Setting -->
+        <form id="setting">
+            <h4>在此处设置轮播图</h4><br>
+            <lable for="direction">方向</lable>
+            <select name="direction" id="direction">
+                <option value="next">正向</option>
+                <option value="prev">反向</option>
+            </select>
+
+            <lable for="loop">循环</lable>
+            <select name="loop" id="loop">
+                <option value="isLoop">是</option>
+                <option value="notLoop">否</option>
+            </select>
+            <lable for="interval">间隔（秒）</lable>
+            <input type="text" id="interval">
+            <span id="confirm">确认</span>
+        </form>
     </article>
-    <br>
+    <article id="specification">
+        <h1>轮播图组件</h1>
+            <br>
+            <h2>功能说明：</h2>
+                <p>1、方向箭头：左右切换到下一张图片</p>
+                <br>
+                <p>2、焦点按钮：切换至相应序号的图片</p>
+                <br>
+                <p>3、设置栏：配置轮播的顺序（正序、逆序）、是否循环、间隔时长</p>
+                <br>
+                <p>4、自动切换：当页面加载完，轮播图开始自动切换</p>
+            <br>
 
-    <!-- Carousel Setting -->
-    <form id="setting">
-        <h4>在此处设置轮播图</h4><br>
-        <lable for="direction">方向</lable>
-        <select name="direction" id="direction">
-            <option value="next">正向</option>
-            <option value="prev">反向</option>
-        </select>
+            <h2>JavaScript函数说明：</h2>
+            <br>
+                <p>为了保证代码易于维护、可复用，轮播图的功能函数被封装在自执行函数中。通过分析轮播图的功能逻辑，将功能解耦，制作成更小单位的动作函数，采用事件委托的方式在回调函数中调用闭包。</p>
+    </article>
 
-        <lable for="loop">循环</lable>
-        <select name="loop" id="loop">
-            <option value="isLoop">是</option>
-            <option value="notLoop">否</option>
-        </select>
-        <lable for="interval">间隔（秒）</lable>
-        <input type="text" id="interval">
-        <span id="confirm">确认</span>
-    </form>
 
     <script type="text/javascript" src="util.js"></script>
     <script type="text/javascript" src="js\task0002_3.js"></script>
