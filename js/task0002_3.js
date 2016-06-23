@@ -59,12 +59,10 @@
         // circulate
         var id = target.getAttribute('id'),
             left = getLeft(),
-            index = Math.abs(parseInt(left / imgWidth)),
-            compare = index;
+            index = Math.abs(parseInt(left / imgWidth));
 
         // boundry condition
         console.log('s', index, left)
-
         switch (id) {
             case 'prev':
                 left += imgWidth;
@@ -96,17 +94,34 @@
         };
         console.log('s', index, left);
 
+        // fix index beyond boundry
         if (index >= 5) {
             index = 1;
         } else if (index <= 0) {
             index = 4;
         };
-        // change button style
+
         activeDot(index);
 
         return slide(left, '0.3s');
     };
 
+    // carousel autoplay
+    function autoplay(direction, loop, interval) {
+        var interval = 1000;
+        autoplay.timer = setTimeout(function delay() {
+            var imgWidth = 600,
+                num = 4;
+            switch (direction) {
+                case true:
+                    arrowClick($('#next'), imgWidth, num);
+                case false:
+                    arrowClick($('#prev'), imgWidth, num);
+            };
+
+            autoplay.timer = setTimeout(delay, interval);
+        }, interval);
+    };
 
 
 
@@ -137,9 +152,10 @@
             return arrowClick(target, imgWidth, num);
         });
 
-    //delegateEvent($('article'), 'a', 'click', animate);
-    // delegateEvent($('article'), 'li', 'click', animate);
+
     //delegateEvent($('form'), 'span', 'click', controlInfo);
+
+    return autoplay();
 }) ();
 
 
